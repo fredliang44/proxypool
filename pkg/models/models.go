@@ -40,7 +40,7 @@ var (
 	HasEngine bool
 
 	DbCfg struct {
-		Type, Host, Name, User, Passwd, Path, SSLMode string
+		Type, Host, Port, Name, User, Passwd, Path, SSLMode string
 	}
 	EnableSQLite3 bool
 )
@@ -70,11 +70,19 @@ func LoadDatabaseInfo() {
 		setting.UseMSSQL = true
 	}
 	DbCfg.Host = sec.Key("HOST").String()
+
+	var err error
+	DbCfg.Port = sec.Key("PORT").String()
+	if DbCfg.Port == "" || err != nil {
+		DbCfg.Port = "3306"
+	}
+
 	DbCfg.Name = sec.Key("NAME").String()
 	DbCfg.User = sec.Key("USER").String()
 	if len(DbCfg.Passwd) == 0 {
 		DbCfg.Passwd = sec.Key("PASSWD").String()
 	}
+
 	DbCfg.SSLMode = sec.Key("SSL_MODE").String()
 	DbCfg.Path = sec.Key("PATH").MustString("data/align.db")
 }
@@ -120,8 +128,9 @@ func getEngine() (*xorm.Engine, error) {
 			connStr = fmt.Sprintf("%s:%s@unix(%s)/%s%scharset=utf8&parseTime=true",
 				DbCfg.User, DbCfg.Passwd, DbCfg.Host, DbCfg.Name, Param)
 		} else {
-			connStr = fmt.Sprintf("%s:%s@tcp(%s)/%s%scharset=utf8&parseTime=true",
-				DbCfg.User, DbCfg.Passwd, DbCfg.Host, DbCfg.Name, Param)
+			connStr = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s%scharset=utf8&parseTime=true",
+				DbCfg.User, DbCfg.Passwd, DbCfg.Host, DbCfg.Port, DbCfg.Name, Param)
+			fmt.Println(connStr)
 		}
 	case "postgres":
 		host, port := parsePostgreSQLHostPort(DbCfg.Host)

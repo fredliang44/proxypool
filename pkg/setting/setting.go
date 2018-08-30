@@ -112,7 +112,7 @@ func NewContext() {
 
 	// Load server config
 	sec := Cfg.Section("server")
-	AppName = Cfg.Section("").Key("APP_NAME").MustString("ProxyPool")
+	AppName = Cfg.Section("").Key("APP_NAME").MustString("github.com/henson/proxypool")
 	AppURL = sec.Key("ROOT_URL").MustString("http://localhost:3000/")
 	if AppURL[len(AppURL)-1] != '/' {
 		AppURL += "/"
@@ -168,7 +168,7 @@ func newLogService() {
 			}
 
 		case clog.FILE:
-			logPath := path.Join(LogRootPath, "ProxyPool.log")
+			logPath := path.Join(LogRootPath, "github.com/henson/proxypool.log")
 			if err = os.MkdirAll(path.Dir(logPath), os.ModePerm); err != nil {
 				clog.Fatal(2, "Fail to create log directory '%s': %v", path.Dir(logPath), err)
 			}

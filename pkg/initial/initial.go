@@ -58,6 +58,7 @@ func Database() {
 	// Save database config
 	cfg.Section("database").Key("DB_TYPE").SetValue(models.DbCfg.Type)
 	cfg.Section("database").Key("HOST").SetValue(models.DbCfg.Host)
+	cfg.Section("database").Key("PORT").SetValue(models.DbCfg.Port)
 	cfg.Section("database").Key("NAME").SetValue(models.DbCfg.Name)
 	cfg.Section("database").Key("USER").SetValue(models.DbCfg.User)
 	cfg.Section("database").Key("PASSWD").SetValue(models.DbCfg.Passwd)
