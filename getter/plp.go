@@ -14,6 +14,7 @@ func PLP() (result []*models.IP) {
 	trNode, err := htmlquery.Find(doc, "//div[@class='hfeed site']//table[@class='bg']//tbody//tr")
 	if err != nil {
 		clog.Warn(err.Error())
+		return
 	}
 	for i := 3; i < len(trNode); i++ {
 		tdNode, _ := htmlquery.Find(trNode[i], "//td")

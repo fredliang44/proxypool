@@ -4,6 +4,7 @@
 *.so
 
 # Folders
+.idea
 _obj
 _test
 
@@ -19,8 +20,10 @@ _cgo_export.*
 
 _testmain.go
 
+main
 *.exe
 *.test
 *.prof
 /conf/app.ini
-.log
+Makefile
+*.log

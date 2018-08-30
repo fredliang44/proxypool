@@ -4,8 +4,8 @@ import (
 	"log"
 	"strings"
 
-	"github.com/henson/proxypool/pkg/models"
 	"github.com/PuerkitoBio/goquery"
+	"github.com/henson/proxypool/pkg/models"
 	"github.com/parnurzeal/gorequest"
 )
 

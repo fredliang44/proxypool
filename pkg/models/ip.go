@@ -1,5 +1,7 @@
 package models
 
+import "github.com/go-clog/clog"
+
 // IP struct
 type IP struct {
 	ID    int64  `xorm:"pk autoincr" json:"-"`
@@ -31,7 +33,10 @@ func InsertIps(ip *IP) (err error) {
 
 func countIps() int64 {
 
-	count, _ := x.Where("id> ?", 0).Count(new(IP))
+	count, err := x.Where("id> ?", 0).Count(new(IP))
+	if err != nil {
+		clog.Fatal(2, "Fail to count Ips: %v", err)
+	}
 	return count
 }
 
